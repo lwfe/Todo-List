@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar'
-import React, { useState, useEffect } from 'react'
+import { StatusBar } from "expo-status-bar";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,82 +10,81 @@ import {
   Keyboard,
   Alert,
   KeyboardAvoidingView,
-  Platform
-} from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+  Platform,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { Ionicons } from '@expo/vector-icons'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { Ionicons } from "@expo/vector-icons";
 
 export default function tasks() {
-  const [task, setTask] = useState([])
-  const [newTask, setNewTask] = useState('')
+  const [task, setTask] = useState([]);
+  const [newTask, setNewTask] = useState("");
 
   async function addTask() {
-    const search = task.filter(task => task === newTask)
+    const search = task.filter((task) => task === newTask);
 
-    if (newTask === '') {
-      return
+    if (newTask === "") {
+      return;
     }
 
     if (search.length !== 0) {
       Alert.alert(
-        'Erro ao adicionar tarefa',
-        'Nome de tarefa repetido, tente adicionando com outro nome'
-      )
-      return
+        "Erro ao adicionar tarefa",
+        "Nome de tarefa repetido, tente adicionando com outro nome"
+      );
+      return;
     }
 
-    setTask([...task, newTask])
-    setNewTask('')
-    Keyboard.dismiss()
+    setTask([...task, newTask]);
+    setNewTask("");
+    Keyboard.dismiss();
   }
 
   async function removeTask(item) {
     Alert.alert(
-      'Deletar Tarefa',
-      'Você tem certeza que deseja remover essa tarefa?',
+      "Deletar Tarefa",
+      "Você tem certeza que deseja remover essa tarefa?",
       [
         {
-          text: 'Não',
+          text: "Não",
           onPress: () => {
-            return
+            return;
           },
-          style: 'cancel'
+          style: "cancel",
         },
         {
-          text: 'Sim',
+          text: "Sim",
           onPress: () => {
-            setTask(task.filter(tasks => tasks !== item))
-          }
-        }
+            setTask(task.filter((tasks) => tasks !== item));
+          },
+        },
       ],
       { cancelable: false }
-    )
+    );
   }
 
   useEffect(() => {
     async function carregaDados() {
-      const task = await AsyncStorage.getItem('task')
+      const task = await AsyncStorage.getItem("task");
 
       if (task) {
-        setTask(JSON.parse(task))
+        setTask(JSON.parse(task));
       }
     }
-    carregaDados()
-  }, [])
+    carregaDados();
+  }, []);
 
   useEffect(() => {
     async function salvaDados() {
-      AsyncStorage.setItem('task', JSON.stringify(task))
+      AsyncStorage.setItem("task", JSON.stringify(task));
     }
-    salvaDados()
-  }, [task])
+    salvaDados();
+  }, [task]);
 
   return (
     <KeyboardAvoidingView
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 30}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={50}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
       <View style={styles.container}>
@@ -93,11 +92,11 @@ export default function tasks() {
 
         <FlatList
           data={task}
-          keyExtractor={item => item.toString()}
+          keyExtractor={(item) => item.toString()}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <View style={styles.tasksContainer}>
-              <Text style={{ fontSize: 20, color: '#000' }}>{item}</Text>
+              <Text style={{ fontSize: 20, color: "#000" }}>{item}</Text>
               <TouchableOpacity onPress={() => removeTask(item)}>
                 <Ionicons name="trash" size={25} color="#f53b57" />
               </TouchableOpacity>
@@ -109,60 +108,62 @@ export default function tasks() {
           <TextInput
             style={styles.input}
             value={newTask}
-            onChangeText={text => setNewTask(text)}
+            onChangeText={(text) => setNewTask(text)}
             placeholder="Adicione uma tarefa"
             maxLength={25}
           />
           <TouchableOpacity style={styles.addIcon} onPress={() => addTask()}>
-            <Text style={{ color: '#485460', fontSize: 22 }}>+</Text>
+            <Text style={{ color: "#485460", fontSize: 22 }}>+</Text>
           </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: 20
+    backgroundColor: "#fff",
+    paddingHorizontal: 20,
+    paddingTop: 5,
+    marginBottom: 50,
   },
   tasksContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 15,
     marginVertical: 10,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 8,
-    justifyContent: 'space-between',
-    backgroundColor: '#dcdde1'
+    justifyContent: "space-between",
+    backgroundColor: "#dcdde1",
   },
   inputContainer: {
-    flexDirection: 'row',
-    paddingVertical: 15
+    flexDirection: "row",
+    paddingVertical: 15,
   },
   input: {
-    backgroundColor: '#dcdde1',
-    width: '80%',
+    backgroundColor: "#dcdde1",
+    width: "80%",
     padding: 10,
-    borderRadius: 8
+    borderRadius: 8,
   },
   addIcon: {
-    backgroundColor: '#0be881',
+    backgroundColor: "#0be881",
     width: 50,
     height: 50,
     marginLeft: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
   },
   title: {
     borderBottomWidth: 0.6,
     paddingBottom: 15,
     marginBottom: 15,
-    borderBottomColor: '#485460'
+    borderBottomColor: "#485460",
   },
   titleText: {
-    fontSize: 40
-  }
-})
+    fontSize: 40,
+  },
+});
