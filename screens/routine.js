@@ -5,6 +5,7 @@ import {
   Text,
   View,
   FlatList,
+  Button,
   TextInput,
   TouchableOpacity,
   Keyboard,
@@ -13,12 +14,16 @@ import {
   Platform,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import moment from "moment";
 
 import { Ionicons } from "@expo/vector-icons";
 
 export default function routine() {
   const [routine, setRoutine] = useState([]);
   const [newRoutine, setNewRoutine] = useState("");
+  const [date, setDate] = useState();
+  const [show, setShow] = useState(false);
 
   async function addRoutine() {
     const search = routine.filter((routine) => routine === newRoutine);
@@ -64,6 +69,11 @@ export default function routine() {
   }
 
   useEffect(() => {
+    var cdate = moment().utcOffset("-03:00");
+    setDate(new Date(cdate));
+  }, []);
+
+  useEffect(() => {
     async function carregaDados() {
       const routine = await AsyncStorage.getItem("routine");
 
@@ -105,6 +115,27 @@ export default function routine() {
         />
 
         <View style={styles.inputContainer}>
+          <TouchableOpacity
+            style={styles.addTime}
+            onPress={() => {
+              setShow(true);
+            }}
+          >
+            <Ionicons name="time" size={25} color="#485460" />
+          </TouchableOpacity>
+          {show && (
+            <DateTimePicker
+              value={date}
+              mode={"time"}
+              is24Hour={true}
+              onChange={(event, currentDate) => {
+                setShow(false);
+                setDate(currentDate);
+                console.log(currentDate);
+              }}
+            />
+          )}
+
           <TextInput
             style={styles.input}
             value={newRoutine}
@@ -143,8 +174,9 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#dcdde1",
-    width: "80%",
+    width: "60%",
     padding: 10,
+    marginLeft: 20,
     borderRadius: 8,
   },
   addIcon: {
@@ -152,6 +184,14 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginLeft: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  addTime: {
+    backgroundColor: "#0be881",
+    width: 50,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
