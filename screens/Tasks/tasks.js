@@ -13,6 +13,7 @@ import {
   Item,
 } from "./styles";
 
+import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -92,7 +93,10 @@ export default function Tasks() {
   }
 
   return (
-    <Container>
+    <Container
+      behavior={Platform.OS === "ios" ? "padding" : null}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+    >
       <StatusBar style="light" />
       <List
         data={task}
@@ -105,6 +109,7 @@ export default function Tasks() {
           value={newTask}
           onChangeText={(text) => setNewTask(text)}
           placeholder="Adicione uma tarefa"
+          placeholderTextColor="#2f3640"
           maxLength={25}
         />
         <AddIcon onPress={() => addTask()}>

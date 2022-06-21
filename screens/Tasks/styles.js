@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.View`
+export const Container = styled.KeyboardAvoidingView`
   flex: 1;
   background-color: white;
 `;
