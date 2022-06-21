@@ -41,7 +41,7 @@ export const Input = styled.TextInput`
 `;
 
 export const AddIcon = styled.TouchableOpacity`
-  background: #0be881;
+  background: #2f3640;
   width: 50px;
   height: 50px;
   margin-left: 20px;
@@ -51,6 +51,6 @@ export const AddIcon = styled.TouchableOpacity`
 `;
 
 export const AddIconText = styled.Text`
-  color: #485460;
+  color: #fff;
   font-size: 22px;
 `;

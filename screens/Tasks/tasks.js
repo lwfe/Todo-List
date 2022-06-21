@@ -23,7 +23,6 @@ export default function Tasks() {
 
   async function addTask() {
     const search = task.filter((task) => task === newTask);
-
     if (newTask === "") {
       return;
     }
@@ -67,7 +66,6 @@ export default function Tasks() {
   useEffect(() => {
     async function carregaDados() {
       const task = await AsyncStorage.getItem("task");
-
       if (task) {
         setTask(JSON.parse(task));
       }
@@ -87,7 +85,7 @@ export default function Tasks() {
       <ItemsView>
         <ListText>{item}</ListText>
         <Item onPress={() => removeTask(item)}>
-          <Ionicons name="trash" size={25} color="#f53b57" />
+          <Ionicons name="trash" size={25} color="#2f3640" />
         </Item>
       </ItemsView>
     );
@@ -95,7 +93,7 @@ export default function Tasks() {
 
   return (
     <Container>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <List
         data={task}
         keyExtractor={(item) => item.toString()}

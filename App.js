@@ -10,7 +10,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Tarefas" component={Tasks} />
+        <Tab.Screen
+          name="Tarefas"
+          component={Tasks}
+          options={{
+            title: "Tarefas",
+            headerStyle: {
+              backgroundColor: "#353b48",
+            },
+            headerTintColor: "#f5f6fa",
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
