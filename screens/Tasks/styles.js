@@ -54,3 +54,14 @@ export const AddIconText = styled.Text`
   color: #fff;
   font-size: 22px;
 `;
+
+export const EmptyListContainer = styled.View`
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const EmptyListText = styled.Text`
+  margin: 250px 0 250px 0;
+  color: #718093;
+`;

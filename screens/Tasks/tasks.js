@@ -11,6 +11,8 @@ import {
   ListText,
   ItemsView,
   Item,
+  EmptyListContainer,
+  EmptyListText,
 } from "./styles";
 
 import { Platform } from "react-native";
@@ -92,6 +94,14 @@ export default function Tasks() {
     );
   }
 
+  function HandleListEmptyComponent() {
+    return (
+      <EmptyListContainer>
+        <EmptyListText>Ainda não há tarefas</EmptyListText>
+      </EmptyListContainer>
+    );
+  }
+
   return (
     <Container
       behavior={Platform.OS === "ios" ? "padding" : null}
@@ -101,6 +111,7 @@ export default function Tasks() {
       <List
         data={task}
         keyExtractor={(item) => item.toString()}
+        ListEmptyComponent={HandleListEmptyComponent()}
         showsVerticalScrollIndicator={false}
         renderItem={HandleRenderItem}
       />
