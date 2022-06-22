@@ -97,7 +97,7 @@ export default function Tasks() {
       behavior={Platform.OS === "ios" ? "padding" : null}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
-      <StatusBar style="light" />
+      <StatusBar style="auto" />
       <List
         data={task}
         keyExtractor={(item) => item.toString()}
