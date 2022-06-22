@@ -10,7 +10,7 @@
 + Delete tasks
 
 ## Features that will be developed in the furute:
-+  Rename tasks
++  Update tasks
 +  Drag and drop list 
 
 ## Tecnologies used:
