@@ -6,7 +6,11 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest --passWithNoTests --no-cache --verbose",
+    "test:staged": "npm run test -- --findRelatedTests"
   },
   "dependencies": {
     "expo": "~49.0.6",
@@ -21,6 +25,7 @@
     "@typescript-eslint/parser": "^6.3.0",
     "eslint": "^8.46.0",
     "eslint-plugin-react": "^7.33.1",
+    "lint-staged": "^13.2.3",
     "typescript": "^5.1.3"
   },
   "private": true
