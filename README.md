@@ -17,16 +17,14 @@
 <table>
   <tr>
     <td>Expo</td>
+    <td>expo-status-bar</td>
+    <td>react</td>
+    <td>react-native</td>
   </tr>
   <tr>
-    <td>-</td>
+    <td>~49.0.6</td>
+    <td>~1.6.0</td>
+    <td>18.2.0</td>
+    <td>0.72.3</td>
   </tr>
 </table>
-
-## How to run the app:
-1. Open your terminal
-2. Paste and run: git clone https://github.com/lwfe/Todo-List
-3. Paste and run: cd Todo-List
-4. Paste and run: npm install 
-5. Paste and run: expo start
-6. Follow the instructions to connect to your device.
