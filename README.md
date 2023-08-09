@@ -19,7 +19,7 @@
     <td>Expo</td>
   </tr>
   <tr>
-    <td>43.0.2</td>
+    <td>-</td>
   </tr>
 </table>
 
