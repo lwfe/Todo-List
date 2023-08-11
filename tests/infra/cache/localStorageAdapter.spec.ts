@@ -28,11 +28,10 @@ describe('LocalStorageAdapter', () => {
   test('should return value if localStorageAdapterSpy.get returns value', async () => {
     const sut = new LocalStorageAdapterSpy()
     const item = {
-      key: '1',
-      value: '123'
+      key: 'tasks',
+      value: []
     }
     const response = await sut.get(item.key)
-    expect(response?.key).toBe(item.key)
-    expect(response?.value).toBe(item.value)
+    expect(response).toStrictEqual(item.value)
   })
 })
