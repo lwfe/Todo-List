@@ -13,7 +13,7 @@ export class LocalStorageAdapterSpy implements LocalStorage {
   }]
   
   key?: string
-  value?: string
+  value?: Task
 
   async get(key: string): Promise<Task[] | undefined> {
     this.key = key
@@ -21,7 +21,7 @@ export class LocalStorageAdapterSpy implements LocalStorage {
     return  item ? item.value : undefined
   }
 
-  async set(key: string, value?: any): Promise<void> {
+  async set(key: string, value: Task): Promise<void> {
     const item = this.localStorage.find(item => item.key === key)
     const newValue: Task[] = item ? item.value : []
 
@@ -29,17 +29,13 @@ export class LocalStorageAdapterSpy implements LocalStorage {
       newValue.push(value)
     }
     
-    if (value) {
-      this.key = key
-      this.value = value
-      this.localStorage.push({
-        key,
-        value: newValue
-      })
-    } else {
-      this.key = key
-      this.value = undefined
-    } 
+    this.key = key
+    this.value = value
+    this.localStorage.push({
+      key,
+      value: newValue
+    })
+    
   }
 
   async remove(key: string): Promise<void> {
