@@ -1,3 +1,3 @@
 export interface DeleteTask {
-    delete: (id: string) => Promise<void>
+    delete: (key: string, id: string) => Promise<void>
 }
