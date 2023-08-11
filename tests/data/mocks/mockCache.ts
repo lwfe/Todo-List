@@ -1,4 +1,5 @@
 import { GetStorage } from '../../../src/data/protocols/getStorage'
+import { RemoveStorage } from '../../../src/data/protocols/remoteStorage'
 import { SetStorage } from '../../../src/data/protocols/setStorage'
 
 type localStorageItem = {
@@ -6,7 +7,7 @@ type localStorageItem = {
   value: any
 }
 
-export class LocalStorageAdapterSpy implements GetStorage, SetStorage {
+export class LocalStorageAdapterSpy implements GetStorage, SetStorage, RemoveStorage {
   localStorage: localStorageItem[] = [
     {
       key: '1',
@@ -20,12 +21,12 @@ export class LocalStorageAdapterSpy implements GetStorage, SetStorage {
   key?: string
   value?: string
 
-  get(key: string): localStorageItem | undefined {
+  async get(key: string): Promise<localStorageItem | undefined> {
     this.key = key
     return this.localStorage.find(item => item.key === key)
   }
 
-  set(key: string, value?: any): localStorageItem | undefined {
+  async set(key: string, value?: any): Promise<void> {
     if (value) {
       this.key = key
       this.value = value
@@ -33,12 +34,13 @@ export class LocalStorageAdapterSpy implements GetStorage, SetStorage {
         key,
         value
       })
-      return this.localStorage.find(item => item.key === key)
     } else {
       this.key = key
       this.value = undefined
-      return undefined
     } 
-    
+  }
+
+  async remove(key: string): Promise<void> {
+    this.localStorage = this.localStorage.filter(item => item.key !== key)
   }
 }
