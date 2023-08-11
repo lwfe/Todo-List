@@ -12,7 +12,7 @@ describe('LocalStorageAdapter', () => {
   test('should call localStorageAdapterSpy.set with correct key and value', async () => {
     const sut = new LocalStorageAdapterSpy()
     const key = 'any_key'
-    const value = 'any_value'
+    const value = {id: 'id', title:'any_value', done: false}
     await sut.set(key, value)
     expect(sut.key).toBe(key)
     expect(sut.value).toBe(value)
