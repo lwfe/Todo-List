@@ -1,38 +1,40 @@
-import { GetStorage } from '../../../src/data/protocols/getStorage'
-import { RemoveStorage } from '../../../src/data/protocols/remoteStorage'
-import { SetStorage } from '../../../src/data/protocols/setStorage'
+import { LocalStorage } from '../../../src/data/protocols/localStorage'
+import { Task } from '../../../src/domain/models/task'
 
-type localStorageItem = {
+type localStorageItem<T> = {
   key: string
-  value: any
+  value: T
 }
 
-export class LocalStorageAdapterSpy implements GetStorage, SetStorage, RemoveStorage {
-  localStorage: localStorageItem[] = [
-    {
-      key: '1',
-      value: '123'
-    },
-    {
-      key: '2',
-      value: '234'
-    }
-  ]
+export class LocalStorageAdapterSpy implements LocalStorage {
+  localStorage: localStorageItem<Task[]>[] = [{
+    key: 'tasks',
+    value: []
+  }]
+  
   key?: string
   value?: string
 
-  async get(key: string): Promise<localStorageItem | undefined> {
+  async get(key: string): Promise<Task[] | undefined> {
     this.key = key
-    return this.localStorage.find(item => item.key === key)
+    const item = this.localStorage.find(item => item.key === key)
+    return  item ? item.value : undefined
   }
 
   async set(key: string, value?: any): Promise<void> {
+    const item = this.localStorage.find(item => item.key === key)
+    const newValue: Task[] = item ? item.value : []
+
+    if (item) {
+      newValue.push(value)
+    }
+    
     if (value) {
       this.key = key
       this.value = value
       this.localStorage.push({
         key,
-        value
+        value: newValue
       })
     } else {
       this.key = key
