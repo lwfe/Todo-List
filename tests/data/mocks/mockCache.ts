@@ -38,7 +38,9 @@ export class LocalStorageAdapterSpy implements LocalStorage {
     
   }
 
-  async remove(key: string): Promise<void> {
-    this.localStorage = this.localStorage.filter(item => item.key !== key)
+  async remove(key: string, id: string): Promise<void> {
+    this.key = key
+    const item = this.localStorage.find(item => item.key === key)
+    this.localStorage = [{key: key, value: item?.value.filter(task => task.id !== id) ?? []}]
   }
 }
