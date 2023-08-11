@@ -1,13 +1,10 @@
 import { Task } from '../../domain/models/task'
-
-import { GetStorage } from '../../data/protocols/getStorage'
-import { RemoveStorage } from '../../data/protocols/remoteStorage'
-import { SetStorage } from '../../data/protocols/setStorage'
+import { LocalStorage } from '../../data/protocols/localStorage'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
-export class AsyncStorageAdapter implements SetStorage, GetStorage, RemoveStorage {
+export class AsyncStorageAdapter implements LocalStorage {
   async get(key: string): Promise<Task[] | null> {
     try {
       const item  = await AsyncStorage.getItem(key)
