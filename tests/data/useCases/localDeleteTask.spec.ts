@@ -1,18 +1,5 @@
-import { LocalStorage } from '../../../src/data/protocols/localStorage'
-import { DeleteTask } from '../../../src/domain/useCases/deleteTask'
 import { LocalStorageAdapterSpy } from '../mocks/mockCache'
-
-
-class LocalDeleteTask implements DeleteTask {
-  constructor(
-    private readonly key: string,
-    private readonly localStorage: LocalStorage
-  ){}
-
-  async delete(id: string): Promise<void> {
-    this.localStorage.remove(this.key, id)
-  }
-}
+import { LocalDeleteTask } from '../../../src/data/useCases/localDeleteTask'
 
 const makeSut = (key: string) => {
   const localStorage = new LocalStorageAdapterSpy()
@@ -22,7 +9,6 @@ const makeSut = (key: string) => {
     localStorage
   }
 }
-
 
 describe('LocalDeleteTask', () => {
   test('should delete task from localStorage', async () => {
