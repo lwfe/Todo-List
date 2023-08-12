@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState} from 'react'
+import HomeScreen from './src/presentational/screens/homeScreen'
+import { Task } from './src/domain/models/task'
+import { AsyncStorageAdapter } from './src/infra/cache/asyncStorageAdapter'
+import { LocalLoadTasks } from './src/data/useCases/localLoadTasks'
+import { LocalAddTask } from './src/data/useCases/localAddTask'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  )
+async function fetchTasks(): Promise<Task[]> {
+  const AsyncStorage = new AsyncStorageAdapter()
+  const localLoadTasks = new LocalLoadTasks('tasks', AsyncStorage)
+  return await localLoadTasks.loadAll()
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
+export default function App() {
+  const [tasks, setTasks] = useState<Task[]>([])
+
+  async function addTask(): Promise<void> {
+    const AsyncStorage = new AsyncStorageAdapter()
+    const localAddTask = new LocalAddTask('tasks', AsyncStorage)
+    await localAddTask.add('teste2')
+    const tasks = await fetchTasks()
+    setTasks(tasks)
+  }
+
+  useEffect(() => {
+    async function loadTasks() {
+      const tasks = await fetchTasks()
+      setTasks(tasks)
+    }
+    loadTasks()
+  }, [])
+
+  return (
+    <HomeScreen tasks={tasks} addTask={addTask} />
+  )
+}
