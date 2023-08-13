@@ -30,10 +30,10 @@ export class LocalAddTask implements AddTask {
   async add(title: string): Promise<void> {
     const id = generateUUID()
 
-    await this.localStorage.set(this.key, {
+    await this.localStorage.set(this.key, [{
       id,
       title,
       done: false
-    })
+    }])
   }
 }

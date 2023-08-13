@@ -3,45 +3,29 @@ import { LocalStorage } from '../../data/protocols/localStorage'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-
 export class AsyncStorageAdapter implements LocalStorage {
+  tasks: Task[] = []
+
   async get(key: string): Promise<Task[] | null> {
     try {
       const item  = await AsyncStorage.getItem(key)
-      if(item !== null) {
+      if (item !== null) {
+        this.tasks = JSON.parse(item)
         return JSON.parse(item)
       }
       return null
     } catch (e) {
-      throw new Error('Erro ao recuperar o item')
+      throw new Error('Erro ao recuperar o(s) item(s)')
     }
   }
 
-  async set(key: string, value: Task): Promise<void> {
-    const tasks: Task[] = []
-
-    if (value) {
-      const valueExists = await this.get(key)
-      if (valueExists) {
-        tasks.push(...valueExists)
-      }
-      tasks.push(value)
-    }
-    
+  async set(key: string, value: Task[]): Promise<void> {
+    const tasks: Task[] = value
     try {
       const jsonValue = JSON.stringify(tasks)
       await AsyncStorage.setItem(key, jsonValue)
     } catch (e) {
-      throw new Error('Erro ao salvar o item')
-    }
-  }
-
-
-  async remove(key: string): Promise<void> {
-    try {
-      await AsyncStorage.removeItem(key)
-    } catch (error) {
-      throw new Error('Erro ao remover o item')
+      throw new Error('Erro ao salvar o(s) item(s)')
     }
   }
 }

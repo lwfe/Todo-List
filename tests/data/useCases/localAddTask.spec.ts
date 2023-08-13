@@ -16,10 +16,10 @@ describe('LocalAddTask', () => {
     const title = 'any_title'
     await sut.add(title)
     expect(localStorage.key).toBe('tasks')
-    expect(localStorage.value).toEqual({
+    expect(localStorage.value).toEqual([{
       id: expect.any(String),
       title,
       done: false
-    })
+    }])
   })
 })
